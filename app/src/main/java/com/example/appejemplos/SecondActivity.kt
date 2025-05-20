@@ -1,5 +1,6 @@
 package com.example.appejemplos
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +29,10 @@ class SecondActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     EjemplosAvanzados(
-                        onBackClick = { finish() }
+                        onBackClick = { finish() },
+                        onNavigateToImages = {
+                            startActivity(Intent(this, ImageActivity::class.java))
+                        }
                     )
                 }
             }
@@ -41,7 +45,10 @@ class SecondActivity : ComponentActivity() {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EjemplosAvanzados(onBackClick: () -> Unit) {
+fun EjemplosAvanzados(
+    onBackClick: () -> Unit,
+    onNavigateToImages: () -> Unit
+) {
     var selectedTab by remember { mutableStateOf(0) }
     var showDialog by remember { mutableStateOf(false) }
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -90,6 +97,14 @@ fun EjemplosAvanzados(onBackClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Botón para navegar a la actividad de imágenes
+            Button(
+                onClick = onNavigateToImages,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Ver Ejemplos de Imágenes")
+            }
+
             // Ejemplo de Tabs
             TabRow(selectedTabIndex = selectedTab) {
                 Tab(

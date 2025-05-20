@@ -27,6 +27,9 @@ class MainActivity : ComponentActivity() {
                     EjemplosBasicos(
                         onNavigateToSecond = {
                             startActivity(Intent(this, SecondActivity::class.java))
+                        },
+                        onNavigateToImages = {
+                            startActivity(Intent(this, ImageActivity::class.java))
                         }
                     )
                 }
@@ -40,7 +43,10 @@ class MainActivity : ComponentActivity() {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EjemplosBasicos(onNavigateToSecond: () -> Unit) {
+fun EjemplosBasicos(
+    onNavigateToSecond: () -> Unit,
+    onNavigateToImages: () -> Unit
+) {
     var texto by remember { mutableStateOf("") }
     var switchState by remember { mutableStateOf(false) }
     var sliderValue by remember { mutableStateOf(0f) }
@@ -63,12 +69,23 @@ fun EjemplosBasicos(onNavigateToSecond: () -> Unit) {
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Botón para navegar a la segunda actividad
-        Button(
-            onClick = onNavigateToSecond,
-            modifier = Modifier.fillMaxWidth()
+        // Botones de navegación
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Ver Más Ejemplos")
+            Button(
+                onClick = onNavigateToSecond,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Ver Más Ejemplos")
+            }
+            Button(
+                onClick = onNavigateToImages,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Ver Imágenes")
+            }
         }
 
         // Ejemplo de TextField
